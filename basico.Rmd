@@ -1,0 +1,55 @@
+
+
+```{r}
+library(r2d3)
+library(bipartite )
+library(purrr) 
+library(dplyr) 
+library(tidyr) 
+library(stringr)
+library(tibble)
+library(RColorBrewer)
+library(bipartiteD3)
+```
+```{r}
+Doubletestdata
+```
+
+
+```{r}
+Doubletestdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3", "bee1","bee1","bee1","bee2","bee1","bee3"), 
+lower = c("plant1","plant2","plant1","plant2","plant3","plant4","plant2","plant1","plant2","plant3","plant4", 'plant5'), 
+webID = c("meadow","meadow","meadow","meadow","meadow","meadow","bog","bog","bog","bog","bog","bog"), freq=c(5,9,1,2,3,7, 2,3,4,7,4,2))
+bipartite::frame2webs(Doubletestdata)-> DoubleTestWeb
+
+bipartite_D3(data =DoubleTestWeb, colouroption = 'brewer', filename = 'demo1')
+```
+
+```{r}
+testdata <- data.frame(higher = c("Squad 1","Squad 1","Squad 2","Squad 3","Squad 1","Squad 4", "Squad 1"), 
+lower = c("Squad 2","Squad 3","Squad 1","Squad 4","Squad 2","Squad 1", "Squad 5"), 
+webID = c("Consome","Consome","Consome","Consome","Consome","Consome", "Consome"), freq=c(5,9,1,2,3,7, 2))
+bipartite::frame2webs(testdata)-> SmallTestWeb
+bipartite_D3(SmallTestWeb, colouroption = 'brewer', ColourBy = 1, filename = 'abc')
+```
+
+
+```{r}
+a = r2d3::r2d3(SmallTestWeb, script='abc.js', dependencies = "vizjs.js", d3_version = "5")
+```
+
+```{r}
+save_d3_html(
+  a,
+  'oi.html',
+  selfcontained = TRUE,
+  libdir = NULL,
+  background = "white",
+  title = "D3 Visualization",
+  knitrOptions = list()
+)
+```
+
+
+
+
